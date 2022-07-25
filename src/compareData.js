@@ -1,25 +1,36 @@
 import _ from 'lodash';
 
-const compareData = (dataOne, dataTwo) => {
-  let result = '';
-  const dataFirst = dataOne;
-  const dataSecond = dataTwo;
-  for (const key of Object.keys(dataFirst)) {
-    if (!_.has(dataSecond, key)) {
-      result += `- ${key}: ${dataFirst[key]} \n`;
-    } else if (dataFirst[key] !== dataSecond[key]) {
-      result += `- ${key}: ${dataFirst[key]} \n`;
-      result += `+ ${key}: ${dataSecond[key]} \n`;
-    } else {
-      result += `  ${key}: ${dataSecond[key]} \n`;
-    }
-  } for (const key of Object.keys(dataSecond)) {
-    if (!_.has(dataFirst, key)) {
-      result += `+ ${key}: ${dataSecond[key]} \n`;
-    }
-  }
-
-  return result.split('/n').sort().toString();
+const formObj = (keys, obj) => {
+  const result = keys.reduce((acc, key) => {
+    acc[key] = obj[key];
+    return acc;
+  }, {});
+  return result;
 };
 
+const sort = (obj) => {
+  const keys = _.sortBy(Object.keys(obj));
+  const result = formObj(keys, obj);
+  return result;
+};
+
+const compareData = (dataOne, dataTwo) => {
+  const dataFirst = sort(dataOne);
+  const dataSecond = sort(dataTwo);
+  const keys = _.union(Object.keys(dataFirst), Object.keys(dataSecond));
+  const result = keys.reduce((acc, key) => {
+    if (dataFirst[key] === dataSecond[key]) {
+      acc += `   ${key}: ${dataFirst[key]} \n`;
+    } else if (!Object.hasOwn(dataFirst, key)) {
+      acc += ` + ${key}: ${dataSecond[key]} \n`;
+    } else if (!Object.hasOwn(dataSecond, key)) {
+      acc += ` - ${key}: ${dataFirst[key]} \n`;
+    } else {
+      acc += ` - ${key}: ${dataFirst[key]} \n`;
+      acc += ` + ${key}: ${dataSecond[key]} \n`;
+    }
+    return acc;
+  }, '{ \n') + '}';
+  return result;
+};
 export default compareData;

@@ -2,6 +2,7 @@
 import { Command } from 'commander';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
+// eslint-disable-next-line import/extensions
 import compareData from '../src/compareData.js';
 
 const program = new Command();
@@ -24,5 +25,3 @@ const result = compareData(data1, data2);
 program.action(console.log(result));
 
 export default result;
-
-// TODO: Отсортировать строку, экспортировать
