@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 
 const formObj = (keys, obj) => {
@@ -18,19 +19,20 @@ const compareData = (dataOne, dataTwo) => {
   const dataFirst = sort(dataOne);
   const dataSecond = sort(dataTwo);
   const keys = _.union(Object.keys(dataFirst), Object.keys(dataSecond));
-  const result = keys.reduce((acc, key) => {
+
+  const result = `{\n${keys.reduce((acc, key) => {
     if (dataFirst[key] === dataSecond[key]) {
-      acc += `   ${key}: ${dataFirst[key]} \n`;
+      acc += `    ${key}: ${dataFirst[key]} \n`;
     } else if (!Object.hasOwn(dataFirst, key)) {
-      acc += ` + ${key}: ${dataSecond[key]} \n`;
+      acc += `  + ${key}: ${dataSecond[key]} \n`;
     } else if (!Object.hasOwn(dataSecond, key)) {
-      acc += ` - ${key}: ${dataFirst[key]} \n`;
+      acc += `  - ${key}: ${dataFirst[key]} \n`;
     } else {
-      acc += ` - ${key}: ${dataFirst[key]} \n`;
-      acc += ` + ${key}: ${dataSecond[key]} \n`;
+      acc += `  - ${key}: ${dataFirst[key]} \n`;
+      acc += `  + ${key}: ${dataSecond[key]} \n`;
     }
     return acc;
-  }, '{ \n') + '}';
+  }, '')}}`;
   return result;
 };
 export default compareData;
