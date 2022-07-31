@@ -28,6 +28,5 @@ jobs:
   test:
      runs-on: ubuntu-latest
      steps:
-        - uses: action/checkout@v3
         - name: test
           run: npm test 
