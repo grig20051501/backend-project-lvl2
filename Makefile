@@ -7,3 +7,5 @@ publish:
 	npm link
 test:
 	NODE_OPTIONS=--experimental-vm-modules npx jest
+test-covarage:
+	nom test -- --coverage --coverageProvider=v8
