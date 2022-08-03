@@ -10,9 +10,6 @@
   "scripts": {
     "test": "jest"
   },
-  "jest": {
-    "type": "module"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/grig20051501/backend-project-lvl2.git"
