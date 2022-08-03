@@ -1,5 +1,5 @@
 lint:
-	npx eslint .
+	sudo npx eslint .
 install: 
 	npm ci
 publish:
